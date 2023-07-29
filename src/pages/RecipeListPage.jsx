@@ -72,6 +72,9 @@ export const RecipeListPage = ({ recipes, handleSearch }) => {
       <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 4 }} spacing={6}>
         {filteredRecipes.map((hit) => {
           const recipe = hit.recipe;
+          console.log("2nd recipe:", recipe);
+          console.log("recipe.uri:", recipe.uri);
+
           return (
             <Box
               key={recipe.uri}
@@ -84,7 +87,7 @@ export const RecipeListPage = ({ recipes, handleSearch }) => {
               p={5}
               overflow="hidden"
               _hover={{ cursor: "pointer", backgroundColor: "gray.100" }}
-              onClick={() => handleRecipeClick(hit)}
+              onClick={() => handleRecipeClick(recipe)}
             >
               <AspectRatio ratio={4 / 3}>
                 <Box
