@@ -1,3 +1,4 @@
+import React from "react";
 import { useLocation, Link } from "react-router-dom";
 import {
   Box,
@@ -12,7 +13,19 @@ import {
 
 export const RecipePage = () => {
   const location = useLocation();
-  const { recipe } = location.state;
+  const recipe = location?.state?.recipe;
+
+  console.log("Recipe:", recipe);
+
+  // Disable caching for this component
+  React.useEffect(() => {
+    window.history.replaceState({}, document.title, location.pathname);
+  }, [location.pathname]);
+
+  if (!recipe) {
+    // Recipe not found, navigate back to recipes overview
+    return null;
+  }
 
   const {
     label,
@@ -28,61 +41,60 @@ export const RecipePage = () => {
   } = recipe;
 
   return (
-    <div>
-      <Box p={4}>
-        <Button as={Link} to="/">
-          Back to Recipes Overview
-        </Button>
-        <Heading as="h2" size="xl" mb={4}>
-          {label}
-        </Heading>
-        <Image src={image} alt={label} borderRadius="md" mb={4} />
+    <Box p={4} bg="blue.300" minHeight="100vh">
+      <Button bg="green.100" as={Link} to="/" mb={4}>
+        Back to Recipes Overview
+      </Button>
+      <Heading as="h2" size="xl" mb={4} color="purple.900">
+        {label}
+      </Heading>
+      <Image src={image} alt={label} borderRadius="md" mb={4} maxWidth="100%" />
 
-        {dietLabels.length > 0 && (
-          <Text fontSize="md" color="green.500">
-            {dietLabels.join(", ")}
-          </Text>
-        )}
-
-        <Divider my={4} />
-        <Text fontSize="lg" fontWeight="semibold">
-          Dish Type: {dishType.join(", ")}
+      {dietLabels.length > 0 && (
+        <Text fontSize="md" color="green.100">
+          {dietLabels.join(", ")}
         </Text>
+      )}
 
-        <Text>Total Cooking Time: {totalTime} minutes</Text>
+      <Divider my={4} />
+      <Text fontSize="lg" fontWeight="semibold">
+        Dish Type: {dishType.join(", ")}
+      </Text>
 
-        <Text>Health Labels: {healthLabels.join(", ")}</Text>
+      <Text>Total Cooking Time: {totalTime} minutes</Text>
 
-        {cautions.length > 0 && (
-          <Text fontSize="md" color="pink.500">
-            {cautions.join(", ")}
-          </Text>
-        )}
+      <Text>Health Labels: {healthLabels.join(", ")}</Text>
 
-        <Heading as="h3" size="md" mt={4} mb={2}>
-          Ingredients:
-        </Heading>
-        <List>
-          {ingredientLines.map((ingredient, index) => (
-            <ListItem key={index}>{ingredient}</ListItem>
-          ))}
-        </List>
+      {cautions.length > 0 && (
+        <Text fontSize="md" color="pink.100" mb={3}>
+          {cautions.join(", ")}
+        </Text>
+      )}
 
-        <Text>Servings: {servings}</Text>
+      <Heading as="h3" size="md" mt={4} mb={3}>
+        Ingredients:
+      </Heading>
+      <List>
+        {ingredientLines.map((ingredient, index) => (
+          <ListItem key={index}>{ingredient}</ListItem>
+        ))}
+      </List>
 
-        <Heading as="h3" size="md" mt={4} mb={2}>
-          Total Nutrients:
-        </Heading>
-        <List>
-          {Object.entries(totalNutrients).map(([key, nutrient]) => (
-            <ListItem key={key}>
-              {nutrient.label}: {nutrient.quantity.toFixed(2)} {nutrient.unit}
-            </ListItem>
-          ))}
-        </List>
-      </Box>
-    </div>
+      <Text>Servings: {servings}</Text>
+
+      <Heading as="h3" size="md" mt={4} mb={2}>
+        Total Nutrients:
+      </Heading>
+      <List>
+        {Object.entries(totalNutrients).map(([key, nutrient]) => (
+          <ListItem key={key}>
+            {nutrient.label}: {nutrient.quantity.toFixed(2)} {nutrient.unit}
+          </ListItem>
+        ))}
+      </List>
+    </Box>
   );
 };
 
 export default RecipePage;
+
