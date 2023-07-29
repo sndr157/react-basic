@@ -48,7 +48,7 @@ export const RecipePage = () => {
       <Heading as="h2" size="xl" mb={4} color="purple.900">
         {label}
       </Heading>
-      <Image src={image} alt={label} borderRadius="md" mb={4} maxWidth="100%" />
+      <Image src={image} alt={label} borderRadius="md" mb={4} maxWidth="50%" />
 
       {dietLabels.length > 0 && (
         <Text fontSize="md" color="green.100">
