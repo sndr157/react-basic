@@ -42,7 +42,7 @@ export const App = () => {
               <RecipeListPage recipes={recipes} handleSearch={handleSearch} />
             }
           />
-          <Route path="/recipe/:id" element={<RecipePage data={recipes} />} />
+          <Route path="/recipe/:id" element={<RecipePage />} />
         </Routes>
       </Router>
     </ChakraProvider>
