@@ -9,7 +9,7 @@ import {
   Text,
   IconButton,
 } from "@chakra-ui/react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { SearchIcon } from "@chakra-ui/icons";
 
 export const RecipeListPage = ({ recipes, handleSearch }) => {
@@ -78,7 +78,6 @@ export const RecipeListPage = ({ recipes, handleSearch }) => {
           return (
             <Box
               key={recipe.uri}
-              as={Link}
               to={`/recipe/${encodeURIComponent(recipe.uri)}`}
               style={{ textDecoration: "none" }}
               height="auto"
@@ -138,3 +137,4 @@ export const RecipeListPage = ({ recipes, handleSearch }) => {
 };
 
 export default RecipeListPage;
+
